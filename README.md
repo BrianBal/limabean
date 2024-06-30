@@ -1,2 +1,5 @@
 # limabean
-tool kit to build reactive web apps
+
+A toolkit for building reactive web applications.
+
+## Installation

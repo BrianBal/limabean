@@ -1,4 +1,4 @@
-import BTBaseComponent from "./BTBaseComponent"
+import BaseComponent from "./BaseComponent"
 import { Ref } from "./Ref"
 import { getRoot, setRoot } from "./TreeContext"
 
@@ -17,10 +17,10 @@ type StaticEvents = {
  * Static component
  *
  * @export
- * @class BTStaticComponent
- * @extends {BTBaseComponent}
+ * @class StaticComponent
+ * @extends {BaseComponent}
  */
-export default class BTStaticComponent extends BTBaseComponent {
+export default class StaticComponent extends BaseComponent {
     tagName: string
     props: StaticProps
     bodyFN: StaticBody | null
@@ -29,7 +29,7 @@ export default class BTStaticComponent extends BTBaseComponent {
     constructor(
         tag: string | null,
         props: StaticProps,
-        body: StaticBody | null = null,
+        body: StaticBody | null = null
     ) {
         super()
         this.props = props
@@ -66,8 +66,8 @@ export default class BTStaticComponent extends BTBaseComponent {
         return changed
     }
 
-    static createText(text: string): BTStaticComponent {
-        const comp = new BTStaticComponent("text", {}, text)
+    static createText(text: string): StaticComponent {
+        const comp = new StaticComponent("text", {}, text)
         comp.type = "text"
         // comp.node = document.createTextNode(text)
         return comp
@@ -214,7 +214,7 @@ export default class BTStaticComponent extends BTBaseComponent {
                     // console.log("----", this.debugName)
                     for (let i = 0; i < this.children.length; i++) {
                         const child = this.children[i]
-                        let prev: BTBaseComponent | null = null
+                        let prev: BaseComponent | null = null
                         if (prevChildren.length > i) {
                             prev = prevChildren[i]
                         }

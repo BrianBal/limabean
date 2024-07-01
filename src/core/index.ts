@@ -1,16 +1,16 @@
-export { default as BTBaseComponent } from "./BTBaseComponent"
-export type { ChildItem, EventListener } from "./BTBaseComponent"
+export { default as BaseComponent } from "./BaseComponent"
+export type { ChildItem, EventListener } from "./BaseComponent"
 
-export { default as BTStaticComponent } from "./BTStaticComponent"
+export { default as StaticComponent } from "./StaticComponent"
 
-export { default as BTFunctionalComponent } from "./BTFunctionalComponent"
+export { default as FunctionalComponent } from "./FunctionalComponent"
 export type {
     GenericAsyncComponentFn,
     GenericSyncComponentFn,
     GenericComponentFn,
-} from "./BTFunctionalComponent"
+} from "./FunctionalComponent"
 
-export { default as BTRootComponent } from "./BTRootComponent"
+export { default as RootComponent } from "./RootComponent"
 
 export { default as getUniqueId } from "./lib/getUniqueId"
 

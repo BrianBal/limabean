@@ -1,4 +1,4 @@
-import type { BTStaticComponent } from "../../core"
+import type { StaticComponent } from "../../core"
 import TextTag, { type TextTagBody } from "./TextTag"
 
 /**
@@ -7,12 +7,12 @@ import TextTag, { type TextTagBody } from "./TextTag"
  * @export
  * @param {TextTagBody} body
  * @param {(((e: MouseEvent) => void) | null)} [onClick=null]
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
 export default function Button(
     body: TextTagBody,
-    onClick: ((e: MouseEvent) => void) | null = null,
-): BTStaticComponent {
+    onClick: ((e: MouseEvent) => void) | null = null
+): StaticComponent {
     const comp = TextTag("button", body)
     if (onClick) {
         comp.on("click", onClick)

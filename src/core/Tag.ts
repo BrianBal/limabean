@@ -1,4 +1,4 @@
-import BTStaticComponent from "./BTStaticComponent"
+import StaticComponent from "./StaticComponent"
 import { getPrevRoot, getRoot, push, setPrevRoot, setRoot } from "./TreeContext"
 
 export type TagProps = {
@@ -15,14 +15,14 @@ export type TagBodyFN = () => void
  * @param {string} tag
  * @param {TagProps} props
  * @param {(TagBodyFN | null)} [body=null]
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
 export default function Tag(
     tag: string,
     props: TagProps,
-    body: TagBodyFN | null = null,
-): BTStaticComponent {
-    const el = new BTStaticComponent(tag, props, body)
+    body: TagBodyFN | null = null
+): StaticComponent {
+    const el = new StaticComponent(tag, props, body)
     for (const key in props) {
         el.attr(key, props[key])
     }

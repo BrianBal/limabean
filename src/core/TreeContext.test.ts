@@ -1,13 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { setRoot, push, getRoot } from "./TreeContext"
-import BTBaseComponent from "./BTBaseComponent"
+import BaseComponent from "./BaseComponent"
 
-// Mock BTBaseComponent
-vi.mock("./BTBaseComponent", () => {
+// Mock BaseComponent
+vi.mock("./BaseComponent", () => {
     return {
-        default: class MockBTBaseComponent {
-            children: MockBTBaseComponent[] = []
-            push(child: MockBTBaseComponent) {
+        default: class MockBaseComponent {
+            children: MockBaseComponent[] = []
+            push(child: MockBaseComponent) {
                 this.children.push(child)
             }
         },
@@ -28,7 +28,7 @@ describe("TreeContext", () => {
 
     describe("setRoot", () => {
         it("should set the global context", () => {
-            const root = new BTBaseComponent()
+            const root = new BaseComponent()
             setRoot(root)
             expect(getRoot()).toBe(root)
         })
@@ -36,7 +36,7 @@ describe("TreeContext", () => {
 
     describe("getRoot", () => {
         it("should set the global context", () => {
-            const root = new BTBaseComponent()
+            const root = new BaseComponent()
             setRoot(root)
             expect(getRoot()).toBe(root)
         })
@@ -44,8 +44,8 @@ describe("TreeContext", () => {
 
     describe("push", () => {
         it("should push a child component and return a pop function", () => {
-            const root = new BTBaseComponent()
-            const child = new BTBaseComponent()
+            const root = new BaseComponent()
+            const child = new BaseComponent()
             setRoot(root)
             const pop = push(child)
 
@@ -59,8 +59,8 @@ describe("TreeContext", () => {
         })
 
         it("should push a child component with autoAppendChildren set to false", () => {
-            const root = new BTBaseComponent()
-            const child = new BTBaseComponent()
+            const root = new BaseComponent()
+            const child = new BaseComponent()
             setRoot(root)
 
             const pop = push(child, false)
@@ -73,7 +73,7 @@ describe("TreeContext", () => {
         })
 
         it("should handle pushing when global context is null", () => {
-            const child = new BTBaseComponent()
+            const child = new BaseComponent()
             setRoot(null)
             const pop = push(child)
 
@@ -85,12 +85,12 @@ describe("TreeContext", () => {
         })
 
         it("should handle nesting", () => {
-            const root = new BTBaseComponent()
-            const a = new BTBaseComponent()
-            const b = new BTBaseComponent()
-            const c = new BTBaseComponent()
+            const root = new BaseComponent()
+            const a = new BaseComponent()
+            const b = new BaseComponent()
+            const c = new BaseComponent()
 
-            const render = (c: BTBaseComponent, fn: (() => void) | null) => {
+            const render = (c: BaseComponent, fn: (() => void) | null) => {
                 const pop = push(c)
                 if (fn) {
                     fn()
@@ -115,15 +115,15 @@ describe("TreeContext", () => {
         })
 
         it("should handle nesting with mutiple children on level", () => {
-            const root = new BTBaseComponent()
-            const a = new BTBaseComponent()
-            const aa = new BTBaseComponent()
-            const b = new BTBaseComponent()
-            const ba = new BTBaseComponent()
-            const bb = new BTBaseComponent()
-            const c = new BTBaseComponent()
+            const root = new BaseComponent()
+            const a = new BaseComponent()
+            const aa = new BaseComponent()
+            const b = new BaseComponent()
+            const ba = new BaseComponent()
+            const bb = new BaseComponent()
+            const c = new BaseComponent()
 
-            const render = (c: BTBaseComponent, fn: (() => void) | null) => {
+            const render = (c: BaseComponent, fn: (() => void) | null) => {
                 const pop = push(c)
                 if (fn) {
                     fn()

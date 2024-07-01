@@ -1,10 +1,10 @@
-import { type BTBaseComponent, BTRootComponent } from "../core"
+import { type BaseComponent, RootComponent } from "../core"
 
 export default function startLimabean(
     rootEl: HTMLElement,
-    rootComp: BTBaseComponent
+    rootComp: BaseComponent
 ) {
-    const root = new BTRootComponent(rootEl)
+    const root = new RootComponent(rootEl)
     rootComp.parent = root
     root.children = [rootComp]
     root.render()

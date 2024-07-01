@@ -1,22 +1,22 @@
-import type BTFunctionalComponent from "./BTFunctionalComponent"
+import type FunctionalComponent from "./FunctionalComponent"
 import type { Ref } from "./Ref"
 import getUniqueId from "./lib/getUniqueId"
 
-export type ChildItem = BTBaseComponent
+export type ChildItem = BaseComponent
 export type EventListener = () => void
 
 /**
  * Base component class
  *
  * @export
- * @class BTBaseComponent
+ * @class BaseComponent
  */
-export default class BTBaseComponent {
+export default class BaseComponent {
     /**
      * unique identifier for the component
      *
      * @type {string}
-     * @memberof BTBaseComponent
+     * @memberof BaseComponent
      */
     id: string = getUniqueId()
 
@@ -24,18 +24,18 @@ export default class BTBaseComponent {
      * The type of the component
      *
      * @type {("static" | "text" | "functional" | "root")}
-     * @memberof BTBaseComponent
+     * @memberof BaseComponent
      */
     type: "static" | "text" | "functional" | "root" = "static"
-    debugName = "BTBaseComponent"
+    debugName = "BaseComponent"
     node: HTMLElement | Node | null = null
-    parent: BTBaseComponent | null = null
+    parent: BaseComponent | null = null
     children: ChildItem[] = []
     _hasDirtyChildren = false
     needsUpdate = true
     changeListeners: EventListener[] = []
     _usePlaceholder = false
-    placeholderElement: BTBaseComponent | null = null
+    placeholderElement: BaseComponent | null = null
     _exclude = false
     _registeredRefs: string[] = []
     _hasRegisteredForRefs = false
@@ -75,8 +75,8 @@ export default class BTBaseComponent {
         return null
     }
 
-    get _renderParent(): BTBaseComponent | null {
-        let parent: BTBaseComponent | null = null
+    get _renderParent(): BaseComponent | null {
+        let parent: BaseComponent | null = null
         if (this.parent?.node) {
             parent = this.parent
         } else if (this.parent) {
@@ -85,14 +85,14 @@ export default class BTBaseComponent {
         return parent
     }
 
-    get _funcParent(): BTFunctionalComponent | null {
-        let parent: BTFunctionalComponent | null = null
+    get _funcParent(): FunctionalComponent | null {
+        let parent: FunctionalComponent | null = null
         if (this.type === "functional") {
-            parent = this as unknown as BTFunctionalComponent
+            parent = this as unknown as FunctionalComponent
         } else if (this.parent?.type === "functional") {
-            parent = this.parent as BTFunctionalComponent
+            parent = this.parent as FunctionalComponent
         } else if (this.parent) {
-            parent = this.parent._funcParent as BTFunctionalComponent
+            parent = this.parent._funcParent as FunctionalComponent
         }
         return parent
     }
@@ -164,7 +164,7 @@ export default class BTBaseComponent {
         console.log("Base.onRefChange e.detail", e.detail)
         console.log(
             "Base.onRefChange this._registeredRefs",
-            this._registeredRefs,
+            this._registeredRefs
         )
         const fp = this._funcParent
         console.log("Base.onRefChange this._funcParent", this, fp)
@@ -191,7 +191,7 @@ export default class BTBaseComponent {
     removeEventListener(type: string, listener: EventListener) {
         if (type === "change") {
             this.changeListeners = this.changeListeners.filter(
-                (l) => l !== listener,
+                (l) => l !== listener
             )
         }
     }
@@ -242,7 +242,7 @@ export default class BTBaseComponent {
                             childrenComps.splice(
                                 i + 1,
                                 0,
-                                ...childComp.children,
+                                ...childComp.children
                             )
                         } else if (childComp.placeholderElement) {
                             childComp.placeholderElement.render()
@@ -302,10 +302,10 @@ export default class BTBaseComponent {
 
     /**
      * Set a placeholder component
-     * @param {BTBaseComponent} el - The placeholder component to set
+     * @param {BaseComponent} el - The placeholder component to set
      * @returns {this} The component instance for chaining
      */
-    placeholderComponent(el: BTBaseComponent): this {
+    placeholderComponent(el: BaseComponent): this {
         this._usePlaceholder = true
         this.placeholderElement = el
         return this

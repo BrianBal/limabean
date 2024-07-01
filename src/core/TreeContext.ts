@@ -1,13 +1,13 @@
-import type BTBaseComponent from "./BTBaseComponent"
+import type BaseComponent from "./BaseComponent"
 
-let globalContext: BTBaseComponent | null = null
-let prevGlobalContext: BTBaseComponent | null = null
+let globalContext: BaseComponent | null = null
+let prevGlobalContext: BaseComponent | null = null
 
-export const setPrevRoot = (root: BTBaseComponent) => {
+export const setPrevRoot = (root: BaseComponent) => {
     prevGlobalContext = root
 }
 
-export const getPrevRoot = (): BTBaseComponent | null => {
+export const getPrevRoot = (): BaseComponent | null => {
     return prevGlobalContext
 }
 
@@ -15,9 +15,9 @@ export const getPrevRoot = (): BTBaseComponent | null => {
  * Get the root component
  *
  * @export
- * @return {*}  {(BTBaseComponent | null)}
+ * @return {*}  {(BaseComponent | null)}
  */
-export const getRoot = (): BTBaseComponent | null => {
+export const getRoot = (): BaseComponent | null => {
     return globalContext
 }
 
@@ -25,9 +25,9 @@ export const getRoot = (): BTBaseComponent | null => {
  * Set the root component
  *
  * @export
- * @param {BTBaseComponent} root
+ * @param {BaseComponent} root
  */
-export const setRoot = (root: BTBaseComponent) => {
+export const setRoot = (root: BaseComponent) => {
     globalContext = root
 }
 
@@ -35,13 +35,13 @@ export const setRoot = (root: BTBaseComponent) => {
  * Push a child component
  *
  * @export
- * @param {BTBaseComponent} child
+ * @param {BaseComponent} child
  * @param {boolean} [autoAppendChildren=true]
  * @return {function} pop function to run after rendering
  */
 export const push = (
-    child: BTBaseComponent,
-    autoAppendChildren = true,
+    child: BaseComponent,
+    autoAppendChildren = true
 ): (() => void) => {
     const prev = globalContext
     globalContext = child
@@ -55,7 +55,7 @@ export const push = (
         globalContext = prev
         if (autoAppendChildren && globalContext) {
             const childIndex = globalContext.children.findIndex(
-                (c) => c.id === child.id,
+                (c) => c.id === child.id
             )
 
             // if (debug) {

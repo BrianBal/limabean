@@ -1,4 +1,4 @@
-import BTBaseComponent from "./BTBaseComponent"
+import BaseComponent from "./BaseComponent"
 import type { Ref } from "./Ref"
 import { setRoot } from "./TreeContext"
 
@@ -6,10 +6,10 @@ import { setRoot } from "./TreeContext"
  * Root Component
  *
  * @export
- * @class BTRootComponent
- * @extends {BTBaseComponent}
+ * @class RootComponent
+ * @extends {BaseComponent}
  */
-export default class BTRootComponent extends BTBaseComponent {
+export default class RootComponent extends BaseComponent {
     _isRendering = false
     _pendingRender = false
 
@@ -48,9 +48,9 @@ export default class BTRootComponent extends BTBaseComponent {
             super.render()
         } else {
             console.warn(
-                "BTRootComponent.render: rendering without node",
+                "RootComponent.render: rendering without node",
                 this.id,
-                this.debugName,
+                this.debugName
             )
         }
         console.log("root render time", performance.now() - start, "ms")
@@ -68,7 +68,7 @@ export default class BTRootComponent extends BTBaseComponent {
     }
 }
 
-function debugTree(level: number, node: BTBaseComponent) {
+function debugTree(level: number, node: BaseComponent) {
     console.log("  ".repeat(level), "-", node.debugName)
     for (const c of node.children) {
         debugTree(level + 1, c)

@@ -1,5 +1,5 @@
 import { Tag } from "../../core"
-import type { BTStaticComponent } from "../../core"
+import type { StaticComponent } from "../../core"
 
 type InputType =
     | "text"
@@ -30,12 +30,12 @@ type InputTagProps = {
  * @export
  * @param {string} tag
  * @param {ContainerTagBody} body
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
 export default function Input(
     type: InputType,
-    props: InputTagProps | null = null,
-): BTStaticComponent {
+    props: InputTagProps | null = null
+): StaticComponent {
     let attr: InputTagProps = { type }
     if (props) {
         attr = { ...attr, ...props }

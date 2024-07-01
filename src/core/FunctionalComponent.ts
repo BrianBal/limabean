@@ -1,18 +1,18 @@
-import BTBaseComponent from "./BTBaseComponent"
+import BaseComponent from "./BaseComponent"
 import { getRoot, setRoot } from "./TreeContext"
 
 export type GenericAsyncComponentFn = (
     render: (body: () => void) => void,
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     props: any,
-    ctx: BTComponentContext,
-) => Promise<BTBaseComponent>
+    ctx: BTComponentContext
+) => Promise<BaseComponent>
 export type GenericSyncComponentFn = (
     render: (body: () => void) => void,
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     props: any,
-    ctx: BTComponentContext,
-) => BTBaseComponent
+    ctx: BTComponentContext
+) => BaseComponent
 export type GenericComponentFn =
     | GenericAsyncComponentFn
     | GenericSyncComponentFn
@@ -27,10 +27,10 @@ export type BTComponentContext = {
  * Functional Component
  *
  * @export
- * @class BTFunctionalComponent
- * @extends {BTBaseComponent}
+ * @class FunctionalComponent
+ * @extends {BaseComponent}
  */
-export default class BTFunctionalComponent extends BTBaseComponent {
+export default class FunctionalComponent extends BaseComponent {
     componentFN: GenericComponentFn | null = null
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     props: any = {}
@@ -42,7 +42,7 @@ export default class BTFunctionalComponent extends BTBaseComponent {
     constructor() {
         super()
         this.type = "functional"
-        this.debugName = "BTFunctionalComponent"
+        this.debugName = "FunctionalComponent"
 
         this.context = {
             debug: () => {
@@ -96,7 +96,7 @@ export default class BTFunctionalComponent extends BTBaseComponent {
 
                     for (let i = 0; i < this.children.length; i++) {
                         const child = this.children[i]
-                        let prev: BTBaseComponent | null = null
+                        let prev: BaseComponent | null = null
                         if (prevChildren.length > i) {
                             prev = prevChildren[i]
                         }

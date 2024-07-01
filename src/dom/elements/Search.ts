@@ -1,4 +1,4 @@
-import type { BTStaticComponent } from "../../core"
+import type { StaticComponent } from "../../core"
 import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
 
 /**
@@ -6,8 +6,8 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  *
  * @export
  * @param {ContainerTagBody} body
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
-export default function Search(body: ContainerTagBody): BTStaticComponent {
+export default function Search(body: ContainerTagBody): StaticComponent {
     return ContainerTag("search", body)
 }

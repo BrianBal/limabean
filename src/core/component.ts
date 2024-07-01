@@ -1,18 +1,18 @@
-import type BTBaseComponent from "./BTBaseComponent"
-import BTFunctionalComponent, {
+import type BaseComponent from "./BaseComponent"
+import FunctionalComponent, {
     type BTComponentContext,
-} from "./BTFunctionalComponent"
+} from "./FunctionalComponent"
 import { getRoot, push } from "./TreeContext"
 
 export type AsyncComponentFN<T> = (
     render: (body: () => void) => void,
     props: T,
-    ctx: BTComponentContext,
+    ctx: BTComponentContext
 ) => void
 export type SyncComponentFN<T> = (
     render: (body: () => void) => void,
     props: T,
-    ctx: BTComponentContext,
+    ctx: BTComponentContext
 ) => void
 export type ComponentFn<T> = AsyncComponentFN<T> | SyncComponentFN<T>
 
@@ -22,17 +22,17 @@ export type ComponentFn<T> = AsyncComponentFN<T> | SyncComponentFN<T>
  * @export
  * @template T
  * @param {ComponentFn<T>} fnc
- * @param {BTBaseComponent} [placeholder=null]
+ * @param {BaseComponent} [placeholder=null]
  * @param {string} [name="Anonymous"]
- * @return {*}  {(props: T) => BTBaseComponent}
+ * @return {*}  {(props: T) => BaseComponent}
  */
 export default function component<T>(
     fnc: ComponentFn<T>,
-    placeholder: BTBaseComponent = null,
-    name = "Anonymous",
-): (props: T) => BTFunctionalComponent {
+    placeholder: BaseComponent = null,
+    name = "Anonymous"
+): (props: T) => FunctionalComponent {
     return (props: T) => {
-        const el = new BTFunctionalComponent()
+        const el = new FunctionalComponent()
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         el.componentFN = fnc as any
         el.placeholderElement = placeholder

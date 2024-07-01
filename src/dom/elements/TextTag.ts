@@ -1,5 +1,5 @@
 import Txt from "./Txt"
-import { Tag, type BTStaticComponent } from "../../core"
+import { Tag, type StaticComponent } from "../../core"
 import type { TagBodyFN } from "../../core"
 
 export type TextTagBody = string | TagBodyFN | null
@@ -10,9 +10,12 @@ export type TextTagBody = string | TagBodyFN | null
  * @export
  * @param {string} tag
  * @param {TextTagBody} [body=null]
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
-export default function TextTag(tag: string, body: TextTagBody = null): BTStaticComponent {
+export default function TextTag(
+    tag: string,
+    body: TextTagBody = null
+): StaticComponent {
     let bodyFn: TagBodyFN | null
     switch (typeof body) {
         case "function":

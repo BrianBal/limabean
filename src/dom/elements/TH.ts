@@ -1,4 +1,4 @@
-import type { BTStaticComponent } from "../../core"
+import type { StaticComponent } from "../../core"
 import TextTag, { type TextTagBody } from "./TextTag"
 
 /**
@@ -6,8 +6,8 @@ import TextTag, { type TextTagBody } from "./TextTag"
  *
  * @export
  * @param {ContainerTagBody} body
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
-export default function TH(body: TextTagBody): BTStaticComponent {
+export default function TH(body: TextTagBody): StaticComponent {
     return TextTag("th", body)
 }

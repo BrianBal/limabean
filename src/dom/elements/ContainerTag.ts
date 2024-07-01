@@ -1,4 +1,4 @@
-import { Tag, type BTStaticComponent } from "../../core"
+import { Tag, type StaticComponent } from "../../core"
 import type { TagBodyFN } from "../../core"
 
 export type ContainerTagBody = TagBodyFN | null
@@ -9,11 +9,11 @@ export type ContainerTagBody = TagBodyFN | null
  * @export
  * @param {string} tag
  * @param {ContainerTagBody} body
- * @return {*}  {BTStaticComponent}
+ * @return {*}  {StaticComponent}
  */
 export default function ContainerTag(
     tag: string,
-    body: ContainerTagBody,
-): BTStaticComponent {
+    body: ContainerTagBody
+): StaticComponent {
     return Tag(tag, {}, body)
 }

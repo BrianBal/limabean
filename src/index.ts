@@ -13,10 +13,10 @@ export type {
 } from "./core/index"
 
 export {
-    BTBaseComponent,
-    BTStaticComponent,
-    BTFunctionalComponent,
-    BTRootComponent,
+    BaseComponent,
+    StaticComponent,
+    FunctionalComponent,
+    RootComponent,
     getUniqueId,
     component,
     push,

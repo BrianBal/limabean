@@ -36,15 +36,6 @@ export default class StaticComponent extends BaseComponent {
         this.tagName = tag
         this.debugName = tag
         this.bodyFN = body
-
-        // if (tag !== null) {
-        //     if (tag !== "text") {
-        //         this.node = document.createElement(tag)
-        //         this.type = "static"
-        //     } else {
-        //         this.type = "text"
-        //     }
-        // }
     }
 
     destroy(): void {
@@ -69,7 +60,6 @@ export default class StaticComponent extends BaseComponent {
     static createText(text: string): StaticComponent {
         const comp = new StaticComponent("text", {}, text)
         comp.type = "text"
-        // comp.node = document.createTextNode(text)
         return comp
     }
 
@@ -125,27 +115,25 @@ export default class StaticComponent extends BaseComponent {
     }
 
     on(eventName: string, fn: (e: Event) => void): this {
-        // console.log("on: called", eventName, this.events)
         if (this.events[eventName]) {
-            // console.log("on: removing", this.debugName, eventName)
             document.removeEventListener(eventName, this.events[eventName])
         }
         this.events[eventName] = (e: Event) => {
-            if (e.target === this.node) {
+            if (
+                this.node instanceof Node &&
+                (e.target === this.node || this.node.contains(e.target as Node))
+            ) {
                 console.log("on: handler", this.debugName, eventName)
                 fn(e)
             }
         }
-        // console.log("on: adding", this.debugName, eventName)
         document.addEventListener(eventName, this.events[eventName])
         return this
     }
 
     cleanEvents(events: StaticEvents) {
-        // console.log("on: cleaning", events)
         for (const eventName in events) {
             if (events[eventName]) {
-                // console.log("on: cleaning event", eventName)
                 document.removeEventListener(eventName, events[eventName])
             }
         }
@@ -182,8 +170,6 @@ export default class StaticComponent extends BaseComponent {
         return this
     }
 
-    // TODO: override render method
-    // create node if needed then call super.render
     render() {
         if (this.node === null || this.needsUpdate) {
             this.needsUpdate = false
@@ -211,7 +197,6 @@ export default class StaticComponent extends BaseComponent {
                     this.bodyFN()
                     setRoot(currentRoot)
 
-                    // console.log("----", this.debugName)
                     for (let i = 0; i < this.children.length; i++) {
                         const child = this.children[i]
                         let prev: BaseComponent | null = null
@@ -220,20 +205,12 @@ export default class StaticComponent extends BaseComponent {
                         }
 
                         if (prev?._compareId === child._compareId) {
-                            // console.log("Static: reusing", child)
                             child.node = prev.node
                             child.children = prev.children
                             child.needsUpdate = true
                             prev.destroy()
                         }
-                        // TODO: destroy removed children
                     }
-                    // console.log(
-                    //     "Static.render children",
-                    //     this.debugName,
-                    //     this.children,
-                    //     this.node.childNodes,
-                    // )
                 }
             }
         }

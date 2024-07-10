@@ -1,18 +1,20 @@
 import type BaseComponent from "./BaseComponent"
-import FunctionalComponent, {
-    type BTComponentContext,
-} from "./FunctionalComponent"
-import { getRoot, push } from "./TreeContext"
+import FunctionalComponent, { type BTComponentContext } from "./FunctionalComponent"
+import { push } from "./TreeContext"
+
+export type RenderFunctionCleanup = () => void
 
 export type AsyncComponentFN<T> = (
-    render: (body: () => void) => void,
-    props: T,
-    ctx: BTComponentContext
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  render: (body: () => void) => RenderFunctionCleanup | void,
+  props: T,
+  ctx: BTComponentContext,
 ) => void
 export type SyncComponentFN<T> = (
-    render: (body: () => void) => void,
-    props: T,
-    ctx: BTComponentContext
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  render: (body: () => void) => RenderFunctionCleanup | void,
+  props: T,
+  ctx: BTComponentContext,
 ) => void
 export type ComponentFn<T> = AsyncComponentFN<T> | SyncComponentFN<T>
 
@@ -27,19 +29,19 @@ export type ComponentFn<T> = AsyncComponentFN<T> | SyncComponentFN<T>
  * @return {*}  {(props: T) => BaseComponent}
  */
 export default function component<T>(
-    fnc: ComponentFn<T>,
-    placeholder: BaseComponent = null,
-    name = "Anonymous"
+  fnc: ComponentFn<T>,
+  placeholder: BaseComponent = null,
+  name = "Anonymous",
 ): (props: T) => FunctionalComponent {
-    return (props: T) => {
-        const el = new FunctionalComponent()
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        el.componentFN = fnc as any
-        el.placeholderElement = placeholder
-        el.debugName = name
-        el.props = props
-        const pop = push(el, true)
-        pop()
-        return el
-    }
+  return (props: T) => {
+    const el = new FunctionalComponent()
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    el.componentFN = fnc as any
+    el.placeholderElement = placeholder
+    el.debugName = name
+    el.props = props
+    const pop = push(el, true)
+    pop()
+    return el
+  }
 }

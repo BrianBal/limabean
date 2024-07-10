@@ -5,9 +5,9 @@ export { default as StaticComponent } from "./StaticComponent"
 
 export { default as FunctionalComponent } from "./FunctionalComponent"
 export type {
-    GenericAsyncComponentFn,
-    GenericSyncComponentFn,
-    GenericComponentFn,
+  GenericAsyncComponentFn,
+  GenericSyncComponentFn,
+  GenericComponentFn,
 } from "./FunctionalComponent"
 
 export { default as RootComponent } from "./RootComponent"
@@ -16,9 +16,9 @@ export { default as getUniqueId } from "./lib/getUniqueId"
 
 export { default as component } from "./component"
 export type {
-    AsyncComponentFN,
-    SyncComponentFN,
-    ComponentFn,
+  AsyncComponentFN,
+  SyncComponentFN,
+  ComponentFn,
 } from "./component"
 
 export { push } from "./TreeContext"

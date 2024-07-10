@@ -4,156 +4,114 @@ import BaseComponent from "./BaseComponent"
 
 // Mock BaseComponent
 vi.mock("./BaseComponent", () => {
-    return {
-        default: class MockBaseComponent {
-            children: MockBaseComponent[] = []
-            push(child: MockBaseComponent) {
-                this.children.push(child)
-            }
-        },
-    }
+  return {
+    default: class MockBaseComponent {
+      children: MockBaseComponent[] = []
+      push(child: MockBaseComponent) {
+        this.children.push(child)
+      }
+    },
+  }
 })
 
 describe("TreeContext", () => {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    let consoleSpy: any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  let consoleSpy: any
 
-    beforeEach(() => {
-        consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {})
+  beforeEach(() => {
+    consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    consoleSpy.mockRestore()
+  })
+
+  describe("setRoot", () => {
+    it("should set the global context", () => {
+      const root = new BaseComponent()
+      setRoot(root)
+      expect(getRoot()).toBe(root)
+    })
+  })
+
+  describe("getRoot", () => {
+    it("should set the global context", () => {
+      const root = new BaseComponent()
+      setRoot(root)
+      expect(getRoot()).toBe(root)
+    })
+  })
+
+  describe("push", () => {
+    it("should push a child component and return a pop function", () => {
+      const root = new BaseComponent()
+      const child = new BaseComponent()
+      setRoot(root)
+      const pop = push(child)
+
+      expect(getRoot()).toBe(child)
+
+      pop()
+
+      expect(getRoot()).toBe(root)
+      expect(root.children.length).toBe(1)
+      expect(root.children[0]).toBe(child)
     })
 
-    afterEach(() => {
-        consoleSpy.mockRestore()
+    it("should push a child component with autoAppendChildren set to false", () => {
+      const root = new BaseComponent()
+      const child = new BaseComponent()
+      setRoot(root)
+
+      const pop = push(child, false)
+
+      expect(getRoot()).toBe(child)
+
+      pop()
+
+      expect(root.children.length).toBe(0)
     })
 
-    describe("setRoot", () => {
-        it("should set the global context", () => {
-            const root = new BaseComponent()
-            setRoot(root)
-            expect(getRoot()).toBe(root)
-        })
+    it("should handle pushing when global context is null", () => {
+      const child = new BaseComponent()
+      setRoot(null)
+      const pop = push(child)
+
+      expect(getRoot()).toBe(child)
+
+      pop()
+
+      expect(getRoot()).toBe(null)
     })
 
-    describe("getRoot", () => {
-        it("should set the global context", () => {
-            const root = new BaseComponent()
-            setRoot(root)
-            expect(getRoot()).toBe(root)
+    it("should handle nesting", () => {
+      const root = new BaseComponent()
+      const a = new BaseComponent()
+      const b = new BaseComponent()
+      const c = new BaseComponent()
+
+      const render = (c: BaseComponent, fn: (() => void) | null) => {
+        const pop = push(c)
+        if (fn) {
+          fn()
+        }
+        pop()
+      }
+
+      setRoot(root)
+      render(a, () => {
+        render(b, () => {
+          render(c, null)
         })
+      })
+
+      expect(root.children.length).toBe(1)
+      expect(root.children[0]).toBe(a)
+      expect(a.children.length).toBe(1)
+      expect(a.children[0]).toBe(b)
+      expect(b.children.length).toBe(1)
+      expect(b.children[0]).toBe(c)
+      expect(c.children.length).toBe(0)
     })
-
-    describe("push", () => {
-        it("should push a child component and return a pop function", () => {
-            const root = new BaseComponent()
-            const child = new BaseComponent()
-            setRoot(root)
-            const pop = push(child)
-
-            expect(getRoot()).toBe(child)
-
-            pop()
-
-            expect(getRoot()).toBe(root)
-            expect(root.children.length).toBe(1)
-            expect(root.children[0]).toBe(child)
-        })
-
-        it("should push a child component with autoAppendChildren set to false", () => {
-            const root = new BaseComponent()
-            const child = new BaseComponent()
-            setRoot(root)
-
-            const pop = push(child, false)
-
-            expect(getRoot()).toBe(child)
-
-            pop()
-
-            expect(root.children.length).toBe(0)
-        })
-
-        it("should handle pushing when global context is null", () => {
-            const child = new BaseComponent()
-            setRoot(null)
-            const pop = push(child)
-
-            expect(getRoot()).toBe(child)
-
-            pop()
-
-            expect(getRoot()).toBe(null)
-        })
-
-        it("should handle nesting", () => {
-            const root = new BaseComponent()
-            const a = new BaseComponent()
-            const b = new BaseComponent()
-            const c = new BaseComponent()
-
-            const render = (c: BaseComponent, fn: (() => void) | null) => {
-                const pop = push(c)
-                if (fn) {
-                    fn()
-                }
-                pop()
-            }
-
-            setRoot(root)
-            render(a, () => {
-                render(b, () => {
-                    render(c, null)
-                })
-            })
-
-            expect(root.children.length).toBe(1)
-            expect(root.children[0]).toBe(a)
-            expect(a.children.length).toBe(1)
-            expect(a.children[0]).toBe(b)
-            expect(b.children.length).toBe(1)
-            expect(b.children[0]).toBe(c)
-            expect(c.children.length).toBe(0)
-        })
-
-        it("should handle nesting with mutiple children on level", () => {
-            const root = new BaseComponent()
-            const a = new BaseComponent()
-            const aa = new BaseComponent()
-            const b = new BaseComponent()
-            const ba = new BaseComponent()
-            const bb = new BaseComponent()
-            const c = new BaseComponent()
-
-            const render = (c: BaseComponent, fn: (() => void) | null) => {
-                const pop = push(c)
-                if (fn) {
-                    fn()
-                }
-                pop()
-            }
-
-            setRoot(root)
-            render(a, () => {
-                render(aa, () => {})
-            })
-            render(b, () => {
-                render(ba, null)
-                render(bb, null)
-            })
-            render(c, null)
-
-            expect(root.children.length).toBe(3)
-            expect(root.children[0]).toBe(a)
-            expect(root.children[1]).toBe(b)
-            expect(root.children[2]).toBe(c)
-
-            expect(a.children.length).toBe(1)
-            expect(a.children[0]).toBe(aa)
-
-            expect(b.children.length).toBe(2)
-            expect(b.children[0]).toBe(ba)
-            expect(b.children[1]).toBe(bb)
-
-            expect(c.children.length).toBe(0)
-        })
-    })
+  })
 })

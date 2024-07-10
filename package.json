@@ -18,17 +18,19 @@
         "build:cjs": "esbuild --bundle --sourcemap --outdir=dist/cjs --platform=neutral --target=es2022 --format=cjs src/index.ts",
         "build:esm": "esbuild --bundle --sourcemap --outdir=dist/esm  --platform=neutral --target=es2022 --format=esm src/index.ts",
         "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist/types",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "vitest run",
+        "lint": "biome lint --write --config-path=biome.json .",
+        "format": "biome format --write --config-path=biome.json ."
     },
     "keywords": [],
     "author": "Brian Bal <briantbal@gmail.com>",
     "license": "MIT",
     "devDependencies": {
+        "@biomejs/biome": "1.8.3",
         "@types/node": "^20.14.8",
         "esbuild": "^0.21.5",
-        "eslint": "^9.6.0",
-        "prettier": "^3.3.2",
-        "typescript": "^5.4.5",
+        "lefthook": "^1.7.1",
+        "typescript": "^5.5.3",
         "vitest": "^1.6.0"
     }
 }

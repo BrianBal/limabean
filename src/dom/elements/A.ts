@@ -11,16 +11,16 @@ import TextTag, { type TextTagBody } from "./TextTag"
  * @return {*}  {StaticComponent}
  */
 export default function A(
-    href: string | null,
-    body: TextTagBody,
-    onClick: ((e: MouseEvent) => void) | null = null
+  href: string | null,
+  body: TextTagBody,
+  onClick: ((e: MouseEvent) => void) | null = null,
 ): StaticComponent {
-    const comp = TextTag("a", body)
-    if (href) {
-        comp.attr("href", href)
-    }
-    if (onClick) {
-        comp.on("click", onClick)
-    }
-    return comp
+  const comp = TextTag("a", body)
+  if (href) {
+    comp.attr("href", href)
+  }
+  if (onClick) {
+    comp.on("click", onClick)
+  }
+  return comp
 }

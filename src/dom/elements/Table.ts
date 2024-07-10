@@ -9,5 +9,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {*}  {StaticComponent}
  */
 export default function Table(body: ContainerTagBody): StaticComponent {
-    return ContainerTag("table", body)
+  return ContainerTag("table", body)
 }

@@ -8,5 +8,5 @@ import TextTag, { type TextTagBody } from "./TextTag"
  * @return {StaticComponent} The H4 heading component.
  */
 export default function H4(body: TextTagBody): StaticComponent {
-    return TextTag("h5", body)
+  return TextTag("h5", body)
 }

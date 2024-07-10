@@ -9,5 +9,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {*}  {StaticComponent}
  */
 export default function FieldSet(body: ContainerTagBody): StaticComponent {
-    return ContainerTag("fieldset", body)
+  return ContainerTag("fieldset", body)
 }

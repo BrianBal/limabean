@@ -8,5 +8,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {StaticComponent} - The list item element.
  */
 export default function Li(body: ContainerTagBody): StaticComponent {
-    return ContainerTag("li", body)
+  return ContainerTag("li", body)
 }

@@ -1,65 +1,82 @@
 import { component } from "../../core"
 import type { TagBodyFN } from "../../core"
-import { setRouterPath } from "./RouterState"
+import { setRouterPath, getRouterPath } from "./RouterState"
+import getHashPath from "./getHashPath"
+import getPath from "./getPath"
+
+type RouteOptions = {
+  base: string
+  useHashRoutes?: boolean
+}
 
 type RouterProps = {
-    base: string
-    body: TagBodyFN
+  options: RouteOptions
+  body: TagBodyFN
+}
+
+// Patch history.pushState and history.replaceState
+let patched = false
+function patchHistory() {
+  const originalPushState = history.pushState
+  const originalReplaceState = history.replaceState
+  history.pushState = function (...args) {
+    originalPushState.apply(this, args)
+    window.dispatchEvent(new Event("locationchange"))
+  }
+  history.replaceState = function (...args) {
+    originalReplaceState.apply(this, args)
+    window.dispatchEvent(new Event("locationchange"))
+  }
+}
+if (!patched) {
+  patchHistory()
+  patched = true
 }
 
 const Router = component<RouterProps>(
-    (render, props, ctx) => {
-        // Initialize the current path in the context
-        ctx.set("currentPath", window.location.pathname)
-        setRouterPath(window.location.pathname)
+  (render, props, ctx) => {
+    // Initialize the current path in the context
+    const base = props.options.base ?? ""
+    const useHashRoutes = props.options.useHashRoutes ?? false
 
-        // Function to handle location changes
-        const handleLocationChange = () => {
-            const newPath = window.location.pathname
-            const currentPath = ctx.get<string>("currentPath")
+    const livePath = useHashRoutes ? getHashPath(base, window.location) : getPath(base, window.location)
+    const currentPath = getRouterPath()
+    if (currentPath !== livePath) {
+      setRouterPath(livePath)
+    }
 
-            if (newPath !== currentPath) {
-                ctx.set("currentPath", newPath)
-                setRouterPath(newPath)
-                // Broadcast a custom event that the URL has changed
-                window.dispatchEvent(
-                    new CustomEvent("urlChanged", {
-                        detail: { path: newPath },
-                    })
-                )
-            }
-        }
+    // update the context with router info (base, useHashRoutes, currentPath)
+    ctx.set<string>("Router.base", base)
+    ctx.set<boolean>("Router.useHashRoutes", useHashRoutes)
+    ctx.set<string>("Router.currentPath", currentPath)
 
-        // Listen for popstate events (back/forward navigation)
-        window.addEventListener("popstate", handleLocationChange)
+    // Function to handle location changes
+    const handleLocationChange = () => {
+      const livePath = useHashRoutes ? getHashPath(base, window.location) : getPath(base, window.location)
 
-        // Listen for pushstate and replacestate events
-        const originalPushState = history.pushState
-        const originalReplaceState = history.replaceState
+      if (livePath !== currentPath) {
+        console.log("Router.handleLocationChange changed", livePath)
+        setRouterPath(livePath)
+      }
+    }
 
-        history.pushState = function (...args) {
-            originalPushState.apply(this, args)
-            handleLocationChange()
-        }
+    // Listen for popstate events (back/forward navigation)
+    window.addEventListener("popstate", handleLocationChange)
+    window.addEventListener("locationchange", handleLocationChange)
+    window.addEventListener("hashchange", handleLocationChange)
 
-        history.replaceState = function (...args) {
-            originalReplaceState.apply(this, args)
-            handleLocationChange()
-        }
+    render(() => {
+      props.body()
 
-        render(() => {
-            props.body()
-        })
-
-        // Clean up event listeners when the component is unmounted
-        // return () => {
-        //    window.removeEventListener("popstate", handleLocationChange)
-        //    history.pushState = originalPushState
-        //    history.replaceState = originalReplaceState
-        // }
-    },
-    null,
-    "Router"
+      return () => {
+        window.removeEventListener("popstate", handleLocationChange)
+        window.removeEventListener("locationchange", handleLocationChange)
+        window.removeEventListener("hashchange", handleLocationChange)
+      }
+    })
+  },
+  null,
+  "Router",
 )
 
 export default Router

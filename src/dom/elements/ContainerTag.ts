@@ -11,9 +11,6 @@ export type ContainerTagBody = TagBodyFN | null
  * @param {ContainerTagBody} body
  * @return {*}  {StaticComponent}
  */
-export default function ContainerTag(
-    tag: string,
-    body: ContainerTagBody
-): StaticComponent {
-    return Tag(tag, {}, body)
+export default function ContainerTag(tag: string, body: ContainerTagBody): StaticComponent {
+  return Tag(tag, {}, body)
 }

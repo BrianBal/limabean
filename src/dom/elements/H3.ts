@@ -8,5 +8,5 @@ import TextTag, { type TextTagBody } from "./TextTag"
  * @return {StaticComponent} The H3 heading component.
  */
 export default function H3(body: TextTagBody): StaticComponent {
-    return TextTag("h3", body)
+  return TextTag("h3", body)
 }

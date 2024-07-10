@@ -8,5 +8,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {StaticComponent} The navigation element.
  */
 export default function Nav(body: ContainerTagBody): StaticComponent {
-    return ContainerTag("nav", body)
+  return ContainerTag("nav", body)
 }

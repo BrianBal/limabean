@@ -8,5 +8,5 @@ export type TextTagBody = string | TagBodyFN | null
  * @return {StaticComponent} The HR element component.
  */
 export default function HR(): StaticComponent {
-    return Tag("hr", {})
+  return Tag("hr", {})
 }

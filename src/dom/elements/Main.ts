@@ -8,5 +8,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {StaticComponent} - The Main component.
  */
 export default function Main(body: ContainerTagBody): StaticComponent {
-    return ContainerTag("main", body)
+  return ContainerTag("main", body)
 }

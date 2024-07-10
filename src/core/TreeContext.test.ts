@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
-import { setRoot, push, getRoot } from "./TreeContext"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import BaseComponent from "./BaseComponent"
+import { getRoot, push, setRoot } from "./TreeContext"
 
 // Mock BaseComponent
 vi.mock("./BaseComponent", () => {

@@ -1,6 +1,6 @@
 import { component } from "../../core"
-import type { TextTagBody } from "../elements/TextTag"
 import A from "../elements/A"
+import type { TextTagBody } from "../elements/TextTag"
 
 type RouteProps = {
   // path could be like /home for a static route

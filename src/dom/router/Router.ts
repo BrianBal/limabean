@@ -1,6 +1,6 @@
 import { component } from "../../core"
 import type { TagBodyFN } from "../../core"
-import { setRouterPath, getRouterPath } from "./RouterState"
+import { getRouterPath, setRouterPath } from "./RouterState"
 import getHashPath from "./getHashPath"
 import getPath from "./getPath"
 

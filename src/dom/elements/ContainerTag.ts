@@ -1,4 +1,4 @@
-import { Tag, type StaticComponent } from "../../core"
+import { type StaticComponent, Tag } from "../../core"
 import type { TagBodyFN } from "../../core"
 
 export type ContainerTagBody = TagBodyFN | null

@@ -1,6 +1,6 @@
-import Txt from "./Txt"
-import { Tag, type StaticComponent } from "../../core"
+import { type StaticComponent, Tag } from "../../core"
 import type { TagBodyFN } from "../../core"
+import Txt from "./Txt"
 
 export type TextTagBody = string | TagBodyFN | null
 

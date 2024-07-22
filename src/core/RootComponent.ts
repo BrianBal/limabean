@@ -59,14 +59,12 @@ export default class RootComponent extends BaseComponent {
 
             // render again if needed
             if (this._pendingRender) {
-                console.log("RootComponent.render pending render", this.debugName)
                 this._pendingRender = false
                 setTimeout(() => {
                     this.render()
                 }, 0)
             }
         } else {
-            console.log("RootComponent.render already rending", this.debugName)
             this._pendingRender = true
         }
     }

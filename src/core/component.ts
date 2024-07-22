@@ -34,7 +34,6 @@ export default function component<T>(
     name = "Anonymous",
 ): (props: T) => FunctionalComponent {
     return (props: T) => {
-        console.log("component", name, getRoot())
         const el = new FunctionalComponent()
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         el.componentFN = fnc as any

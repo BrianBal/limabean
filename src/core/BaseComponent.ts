@@ -48,7 +48,6 @@ export default class BaseComponent {
     destroy() {
         this.parent = null
         if (this._hasRegisteredForRefs) {
-            console.log("Unregistering refs", this.debugName)
             document.removeEventListener("ref-change", this.onRefChange)
         }
     }
@@ -151,7 +150,6 @@ export default class BaseComponent {
         if (!this._registeredRefs.includes(ref._id)) {
             this._registeredRefs.push(ref._id)
             if (!this._hasRegisteredForRefs) {
-                console.log("Registering refs", this.debugName)
                 document.addEventListener("ref-change", this.onRefChange)
                 this._hasRegisteredForRefs = true
             }
@@ -227,7 +225,6 @@ export default class BaseComponent {
                         }
                         break
                     case "functional":
-                        console.log("**** BaseComponent.render functional", childComp.debugName, childComp.children)
                         if (childComp.children?.length > 0) {
                             // functional components do not have a node
                             // so we need to render their children here

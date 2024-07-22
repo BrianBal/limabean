@@ -89,13 +89,10 @@ export default class FunctionalComponent extends BaseComponent {
 
     render() {
         if (this.needsUpdate) {
-            console.log("FunctionalComponent.render", this.debugName)
             if (this._isRendering) {
-                console.log("**** FunctionalComponent.render already rending", this.debugName)
                 this.needsUpdate = true
                 return
             }
-            console.log("FunctionalComponent.render running", this.debugName)
             this._isRendering = true
             this.needsUpdate = false
             if (this.componentFN) {
@@ -118,15 +115,6 @@ export default class FunctionalComponent extends BaseComponent {
 
                         if (prev?._compareId === child._compareId) {
                             if (prev instanceof FunctionalComponent && prev._isRendering) {
-                                console.log(
-                                    "***** RENDERING PREV",
-                                    prev.id,
-                                    prev.debugName,
-                                    "isRendering",
-                                    prev._isRendering,
-                                    "needsUpdate",
-                                    prev.needsUpdate,
-                                )
                                 this.children[i] = prev
                                 prevChildren[i] = child
                             } else {
@@ -150,22 +138,11 @@ export default class FunctionalComponent extends BaseComponent {
 
                     const renderParent = this._renderParent
                     this._isRendering = false
-                    console.log(
-                        "FunctionalComponent.render done",
-                        this.id,
-                        this.debugName,
-                        "isRendering",
-                        this._isRendering,
-                        "needsUpdate",
-                        this.needsUpdate,
-                    )
                     if (renderParent) {
                         // re-render parent so changes are reflected
-                        console.log("**** RENDER PARENT", renderParent.debugName, this.debugName, this.id, renderParent)
                         renderParent.render()
                     } else {
                         // if no parent, render self
-                        console.log("**** RENDER SELF", this.debugName, this)
                         this.render()
                     }
                 }

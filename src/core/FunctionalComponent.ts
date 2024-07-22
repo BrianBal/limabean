@@ -149,7 +149,6 @@ export default class FunctionalComponent extends BaseComponent {
                 if (this._cleanupFn) {
                     this._cleanupFn()
                 }
-                // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
                 this.componentFN(componentRender, this.props, this.context)
             }
         } else {

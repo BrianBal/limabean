@@ -8,5 +8,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {StaticComponent} The ordered list element.
  */
 export default function Ol(body: ContainerTagBody): StaticComponent {
-  return ContainerTag("ol", body)
+    return ContainerTag("ol", body)
 }

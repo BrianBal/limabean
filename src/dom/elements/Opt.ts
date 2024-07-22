@@ -8,7 +8,7 @@ import TextTag, { type TextTagBody } from "./TextTag"
  * @return {StaticComponent} - The list item element.
  */
 export default function Opt(value: string, body: TextTagBody): StaticComponent {
-  const tag = TextTag("option", body)
-  tag.attr("value", value)
-  return tag
+    const tag = TextTag("option", body)
+    tag.attr("value", value)
+    return tag
 }

@@ -2,7 +2,7 @@ import { Tag } from "../../core"
 import type { StaticComponent } from "../../core"
 
 type TextAreaProps = {
-  [key: string]: string
+    [key: string]: string
 }
 
 /**
@@ -13,6 +13,6 @@ type TextAreaProps = {
  * @return {*}  {StaticComponent}
  */
 export default function Input(props: TextAreaProps | null = null): StaticComponent {
-  const tag = Tag("textarea", props)
-  return tag
+    const tag = Tag("textarea", props)
+    return tag
 }

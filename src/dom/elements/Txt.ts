@@ -8,8 +8,8 @@ import { StaticComponent, push } from "../../core"
  * @return {*}  {StaticComponent}
  */
 export default function Txt(text: string): StaticComponent {
-  const el = StaticComponent.createText(text)
-  const pop = push(el, true)
-  pop()
-  return el
+    const el = StaticComponent.createText(text)
+    const pop = push(el, true)
+    pop()
+    return el
 }

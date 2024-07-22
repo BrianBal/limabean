@@ -9,5 +9,5 @@ import TextTag, { type TextTagBody } from "./TextTag"
  * @return {*}  {StaticComponent}
  */
 export default function TD(body: TextTagBody): StaticComponent {
-  return TextTag("td", body)
+    return TextTag("td", body)
 }

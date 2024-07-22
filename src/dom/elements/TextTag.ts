@@ -13,19 +13,19 @@ export type TextTagBody = string | TagBodyFN | null
  * @return {*}  {StaticComponent}
  */
 export default function TextTag(tag: string, body: TextTagBody = null): StaticComponent {
-  let bodyFn: TagBodyFN | null
-  switch (typeof body) {
-    case "function":
-      bodyFn = body
-      break
-    case "string":
-      bodyFn = () => {
-        Txt(body)
-      }
-      break
-    default:
-      bodyFn = null
-      break
-  }
-  return Tag(tag, {}, bodyFn)
+    let bodyFn: TagBodyFN | null
+    switch (typeof body) {
+        case "function":
+            bodyFn = body
+            break
+        case "string":
+            bodyFn = () => {
+                Txt(body)
+            }
+            break
+        default:
+            bodyFn = null
+            break
+    }
+    return Tag(tag, {}, bodyFn)
 }

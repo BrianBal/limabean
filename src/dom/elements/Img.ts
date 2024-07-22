@@ -8,5 +8,5 @@ export type TextTagBody = string | TagBodyFN | null
  * @return {StaticComponent} The HR element component.
  */
 export default function Img(src: string, alt: string): StaticComponent {
-  return Tag("img", { src, alt })
+    return Tag("img", { src, alt })
 }

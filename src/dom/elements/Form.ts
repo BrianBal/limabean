@@ -8,5 +8,5 @@ import ContainerTag, { type ContainerTagBody } from "./ContainerTag"
  * @return {StaticComponent} - The Header component.
  */
 export default function Form(body: ContainerTagBody): StaticComponent {
-  return ContainerTag("form", body)
+    return ContainerTag("form", body)
 }
